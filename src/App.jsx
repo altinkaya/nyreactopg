@@ -6,6 +6,7 @@ import Home from "./page/Home"
 import PageNotFound from "./layout/PageNotFound"
 import Header from "./layout/Header"
 import MainNav from "./layout/MainNav"
+import Login from "./page/Login"
 
 
 
@@ -43,7 +44,9 @@ function App() {
     <Route element={<Applayout/>}>
 
     <Route index element={<Navigate to="home"/>}/>
+  
       <Route path="home" element={<Home/>}/>
+      <Route path="/login" element={<Login/>}/>
       <Route path="/about" element={<h1>About</h1>}/>
       <Route path="/contact" element={<h1>Contact</h1>}/>
 
