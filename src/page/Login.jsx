@@ -1,6 +1,34 @@
+import styled from 'styled-components';
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from "../Util/globalVeribels.js"
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+`;
+
+const Label = styled.label`
+  margin-bottom: 10px;
+  font-size: 1.2em;
+`;
+
+const Input = styled.input`
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+`;
+
+const Error = styled.p`
+  color: red;
+`;
+
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -46,18 +74,18 @@ function Login() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
+    <Form onSubmit={handleSubmit}>
+      <Label>
         Brugernavn:
-        <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-      </label>
-      <label>
+        <Input type="text" value={username} onChange={e => setUsername(e.target.value)} />
+      </Label>
+      <Label>
         Adgangskode:
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-      </label>
-      {error && <p>{error}</p>}
-      <input type="submit" value="Log ind" />
-    </form>
+        <Input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+      </Label>
+      {error && <Error>{error}</Error>}
+      <Input type="submit" value="Log ind" />
+    </Form>
   );
 }
 

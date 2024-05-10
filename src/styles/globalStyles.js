@@ -33,19 +33,20 @@ const GlobalStyles = createGlobalStyle`
 
 }
 
-*{
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-    body{
-         
-            font-family: "Jacquard 24", sans-serif;
-            font-weight: 400;
-            font-style: normal;
-          }
-          
-    `;
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Jacquard 24", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+`;
+
     export default GlobalStyles;
