@@ -9,13 +9,19 @@ export const login = async (username, password) => {
             },
             body: JSON.stringify({
                 "username": username,
-                "password": password,
-                "roles": roles
+                "password": password
             })
         });
+
+        if (!result.ok) {
+            throw new Error(`Login failed with status: ${result.status}`);
+        }
+
         const data = await result.json();
         console.log(data);
+        return data; // Return data from the function
     } catch (e) {
         console.log(e);
+        throw e; // Re-throw the error so it can be caught and handled in the calling code
     }
 }

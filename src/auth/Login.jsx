@@ -1,5 +1,5 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from "../Service/apiFacede.js"
 
@@ -29,29 +29,29 @@ const Error = styled.p`
   color: red;
 `;
 
-function Login() {
+const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Get navigate function from react-router-dom
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError(null); // Clear any previous errors
+    setError(null);
 
     try {
       const data = await login(username, password);
-      if (!data.token) {
+      if (!data) {
         setError('No data returned from login');
         return;
       }
-
-      console.log(data.token);
+      console.log('Token saved in localStorage:', data.token);
+      console.log(data);
 
       // Save token in localStorage
       localStorage.setItem('token', data.token);
       // Redirect to home page
-      navigate('/home');
+      navigate('/home'); // Use the navigate function to redirect
     } catch (error) {
       setError('Failed to login');
       console.error(error);
@@ -61,16 +61,26 @@ function Login() {
   return (
     <Form onSubmit={handleSubmit}>
       <Label>Username</Label>
-      <Input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
+      <Input
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        required
+      />
 
       <Label>Password</Label>
-      <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+      <Input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+      />
 
       {error && <Error>{error}</Error>}
 
       <Input type="submit" value="Login" />
     </Form>
   );
-}
+};
 
 export default Login;
