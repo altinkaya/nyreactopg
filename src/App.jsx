@@ -36,29 +36,35 @@ let params = useParams();
 
 
 
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState({ roles: [] });
 
-  
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated}><Applayout setIsAuthenticated={setIsAuthenticated} roles={user.roles}/></ProtectedRoute>}>
-          <Route index element={<Navigate to="home"/>}/>
-          <Route path="home" element={<Home/>}/>
-          <Route path="/about" element={<h1>About</h1>}/>
-          <Route path="/contact" element={<h1>Contact</h1>}/>
-          <Route path="posts" element={<Posts/>}>
-            <Route index element={<h1>New Posts</h1>}/> 
-            <Route path=":postId" element={<Post/>}/>  
+        <Route
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Applayout setIsAuthenticated={setIsAuthenticated} roles={user.roles} />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Navigate to="home" />} />
+          <Route path="home" element={<Home />} />
+          <Route path="about" element={<h1>About</h1>} />
+          <Route path="contact" element={<h1>Contact</h1>} />
+          <Route path="posts" element={<Posts />}>
+            <Route index element={<h1>New Posts</h1>} />
+            <Route path=":postId" element={<Post />} />
           </Route>
-          <Route path="*" element={<PageNotFound/>}/>
+          <Route path="*" element={<PageNotFound />} />
         </Route>
-        <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} setUser={setUser}/>}/>
+        <Route path="login" element={<Login setIsAuthenticated={setIsAuthenticated} setUser={setUser} />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -47,7 +47,7 @@ const Login = () => {
       }
       console.log('Token saved in localStorage:', data.token);
       console.log(data);
-
+      setIsAuthenticated(true);
       // Save token in localStorage
       localStorage.setItem('token', data.token);
       // Redirect to home page
