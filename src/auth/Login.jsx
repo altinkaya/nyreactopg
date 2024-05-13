@@ -45,7 +45,9 @@ function Login() {
         if (data.status === 401) {
           setError('Forkert brugernavn eller adgangskode');
         } else {
+          console.log("heelo");
           setError(data.message);
+        
         }
         return;
       }
