@@ -18,5 +18,3 @@ export const login = async (username, password) => {
         console.log(e);
     }
 }
-
-login('admin', '1234');
