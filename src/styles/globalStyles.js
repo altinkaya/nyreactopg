@@ -43,7 +43,7 @@ const GlobalStyles = createGlobalStyle`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: "Jacquard 24", sans-serif;
+    font-family: sans-serif, sans-serif;
     font-weight: 400;
     font-style: normal;
   }

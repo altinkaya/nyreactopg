@@ -59,7 +59,12 @@ function Login() {
       setIsAuthenticated(true);
   
       // Redirect to home page
-      navigate('/');
+
+if(isAuthenticated){
+
+  return <Navigate to="/home" />;
+}
+
   
     } catch (e) {
       setError(e.toString());
