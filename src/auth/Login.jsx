@@ -62,18 +62,15 @@ function Login() {
       }
       // Set isAuthenticated to true
       setIsAuthenticated(true);
-  
-      // Redirect to home page
-
-if(isAuthenticated){
-
-  return <Navigate to="/home" />;
-}
-
-  
     } catch (e) {
       setError(e.toString());
     }
+
+    if(isAuthenticated){
+
+      return <Navigate to="/home" />;
+    }
+      
   };
 
   return (
