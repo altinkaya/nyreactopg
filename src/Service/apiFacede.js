@@ -1,6 +1,6 @@
 import  {BASE_URL} from "../Util/globalVeribels.js"
 
-const login = async (username, password) => {
+export const login = async (username, password) => {
     try {
         const result = await fetch (`${BASE_URL}/auth/login`, {
             method: 'POST',

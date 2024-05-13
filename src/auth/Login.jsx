@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BASE_URL } from "../Util/globalVeribels.js"
+import { login } from "../Service/apiFacede.js"
+
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -29,45 +29,38 @@ const Error = styled.p`
   color: red;
 `;
 
-
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const result = await fetch (`${BASE_URL}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          "username": username,
-          "password": password
-        })
-      });
-      if (!result.ok) {
-        if (result.status === 401) {
+      const data = await login(username, password);
+      if (!data.ok) {
+        if (data.status === 401) {
           setError('Forkert brugernavn eller adgangskode');
         } else {
-          const errorData = await result.json();
-          setError(errorData.message);
+          setError(data.message);
         }
         return;
       }
-      const data = await result.json();
       console.log(data);
-
+  
       // Save token and username in localStorage
       localStorage.setItem('token', data.token);
       localStorage.setItem('username', data.username);
-
+  
+      // Set isAuthenticated to true
+      setIsAuthenticated(true);
+  
       // Redirect to home page
       navigate('/');
-
+  
     } catch (e) {
       setError(e.toString());
     }
