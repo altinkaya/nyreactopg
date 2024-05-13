@@ -33,45 +33,42 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setError(null); // Clear any previous errors
+
     try {
-      const token = await login(username, password);
-      if (!token) {
+      const data = await login(username, password);
+      if (!data.token) {
         setError('No data returned from login');
         return;
       }
-  
-      console.log(token);
-  
+
+      console.log(data.token);
+
       // Save token in localStorage
-      localStorage.setItem('token', token);
-  
-      // Set isAuthenticated to true
-      setIsAuthenticated(true);
-  
+      localStorage.setItem('token', data.token);
       // Redirect to home page
       navigate('/home');
-    } catch (e) {
-      setError(e.toString());
+    } catch (error) {
+      setError('Failed to login');
+      console.error(error);
     }
   };
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Label>
-        Brugernavn:
-        <Input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-      </Label>
-      <Label>
-        Adgangskode:
-        <Input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-      </Label>
-      <Input type="submit" value="Log ind" />
-      {error && <p>{error}</p>}
+      <Label>Username</Label>
+      <Input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
+
+      <Label>Password</Label>
+      <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+
+      {error && <Error>{error}</Error>}
+
+      <Input type="submit" value="Login" />
     </Form>
   );
 }

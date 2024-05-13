@@ -9,7 +9,8 @@ export const login = async (username, password) => {
             },
             body: JSON.stringify({
                 "username": username,
-                "password": password
+                "password": password,
+                "roles": roles
             })
         });
         const data = await result.json();
