@@ -39,32 +39,20 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const data = await login(username, password);
-      if (!data) {
+      const token = await login(username, password);
+      if (!token) {
         setError('No data returned from login');
         return;
       }
-      if (!data.ok) {
-        if (data.status === 401) {
-          setError('Forkert brugernavn eller adgangskode');
-        } else {
-          setError(data.message);
-        }
-        return;
-      }
-      console.log(data);
-
-      // Save token and username in localStorage
-      if (data.token) {
-        localStorage.setItem('token', data.token);
-      }
-      if (data.username) {
-        localStorage.setItem('username', data.username);
-      }
-
+  
+      console.log(token);
+  
+      // Save token in localStorage
+      localStorage.setItem('token', token);
+  
       // Set isAuthenticated to true
       setIsAuthenticated(true);
-
+  
       // Redirect to home page
       navigate('/home');
     } catch (e) {
