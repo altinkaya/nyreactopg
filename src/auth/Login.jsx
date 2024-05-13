@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { login } from "../Service/apiFacede.js"
+import { login } from "../Service/apiFacede.js";
 
 const Form = styled.form`
   display: flex;
@@ -29,7 +29,7 @@ const Error = styled.p`
   color: red;
 `;
 
-const Login = () => {
+const Login = ({ setIsAuthenticated }) => { // Receive setIsAuthenticated as prop
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -45,11 +45,16 @@ const Login = () => {
         setError('No data returned from login');
         return;
       }
+
       console.log('Token saved in localStorage:', data.token);
       console.log(data);
+
+      // Update authentication status
       setIsAuthenticated(true);
+
       // Save token in localStorage
       localStorage.setItem('token', data.token);
+
       // Redirect to home page
       navigate('/home'); // Use the navigate function to redirect
     } catch (error) {
