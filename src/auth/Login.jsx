@@ -54,9 +54,12 @@ function Login() {
       console.log(data);
   
       // Save token and username in localStorage
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('username', data.username);
-  
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+      }
+      if (data.username) {
+        localStorage.setItem('username', data.username);
+      }
       // Set isAuthenticated to true
       setIsAuthenticated(true);
   
