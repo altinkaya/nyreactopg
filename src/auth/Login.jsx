@@ -1,7 +1,10 @@
+
+import { login } from "../Service/apiFacede.js";
+
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { login } from "../Service/apiFacede.js";
+import { useNavigate, NavLink } from 'react-router-dom'; // Import useNavigate and NavLink
+
 
 const Form = styled.form`
   display: flex;
@@ -29,11 +32,11 @@ const Error = styled.p`
   color: red;
 `;
 
-const Login = ({ setIsAuthenticated }) => { // Receive setIsAuthenticated as prop
+const Login = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); // Get navigate function from react-router-dom
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -47,16 +50,9 @@ const Login = ({ setIsAuthenticated }) => { // Receive setIsAuthenticated as pro
       }
 
       console.log('Token saved in localStorage:', data.token);
-      console.log(data);
-
-      // Update authentication status
       setIsAuthenticated(true);
-
-      // Save token in localStorage
       localStorage.setItem('token', data.token);
-
-      // Redirect to home page
-      navigate('/home'); // Use the navigate function to redirect
+      navigate('/home');
     } catch (error) {
       setError('Failed to login');
       console.error(error);
@@ -84,6 +80,9 @@ const Login = ({ setIsAuthenticated }) => { // Receive setIsAuthenticated as pro
       {error && <Error>{error}</Error>}
 
       <Input type="submit" value="Login" />
+
+      {/* Link to Register page */}
+      <NavLink to="/register">Register</NavLink>
     </Form>
   );
 };

@@ -8,7 +8,9 @@ import PageNotFound from "./layout/PageNotFound"
 import Header from "./layout/Header"
 import MainNav from "./layout/MainNav"
 import Login from "./auth/Login"
+import Logout from "./auth/Logout"
 import ProtectedRoute from "./auth/ProtectedRoute"
+import Register from './auth/Register';
 
 
 
@@ -16,6 +18,10 @@ import ProtectedRoute from "./auth/ProtectedRoute"
 const Test = styled.p`
 background-color: var(--color-purple-50);
 `
+const handleLogout = () => {
+
+  setIsAuthenticated(false);
+};
 
 
 function Posts(){
@@ -40,7 +46,7 @@ let params = useParams();
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState({ roles: [] });
-
+ 
   return (
     <BrowserRouter>
       <Routes>
@@ -59,9 +65,14 @@ function App() {
             <Route index element={<h1>New Posts</h1>} />
             <Route path=":postId" element={<Post />} />
           </Route>
-          <Route path="*" element={<PageNotFound />} />
         </Route>
         <Route path="login" element={<Login setIsAuthenticated={setIsAuthenticated} setUser={setUser} />} />
+        {/* Only render Register component when not authenticated */}
+        {!isAuthenticated && (
+          <Route path="register" element={<Register setIsAuthenticated={setIsAuthenticated} setUser={setUser} />} />
+        )}
+       <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );
